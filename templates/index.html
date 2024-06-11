@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steganography SPA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Steganography SPA</h1>
+        <div id="encoder">
+            <h2>Encode Message</h2>
+            <form id="encodeForm">
+                <input type="file" id="encodeImage" required>
+                <input type="text" id="encodeMessage" placeholder="Enter your message" required>
+                <button type="submit">Encode</button>
+            </form>
+            <div id="encodedResult">
+                <h3>Encoded Image</h3>
+                <img id="encodedImage" src="" alt="Encoded Image">
+                <p></p>
+                <a id="downloadLink" href="" download>Download</a>
+            </div>
+        </div>
+        <div id="decoder">
+            <h2>Decode Message</h2>
+            <form id="decodeForm">
+                <input type="file" id="decodeImage" required>
+                <button type="submit">Decode</button>
+            </form>
+            <div id="decodedResult">
+                <h3>Decoded Message</h3>
+                <p id="decodedMessage"></p>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
