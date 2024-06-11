@@ -36,7 +36,7 @@ def embed_message(image_path, message, output_path):
                 r = (r & ~1) | int(binary_message[message_index])
                 pixels[x, y] = (r, g, b)
                 message_index += 1
-    img.save(output_path)
+    img.save(output_path, format='PNG')
 
 def extract_message(image_path):
     img = Image.open(image_path)
@@ -69,13 +69,14 @@ def encode():
         return jsonify({'error': 'No selected file'}), 400
     filename = secure_filename(image.filename)
     input_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    output_path = os.path.join(app.config['OUTPUT_FOLDER'], filename)
+    output_filename = os.path.splitext(filename)[0] + ".png"
+    output_path = os.path.join(app.config['OUTPUT_FOLDER'], output_filename)
     image.save(input_path)
     embed_message(input_path, message, output_path)
-    new_image_data = ImageData(filename=filename, message=message)
+    new_image_data = ImageData(filename=output_filename, message=message)
     db.session.add(new_image_data)
     db.session.commit()
-    return jsonify({'filename': filename})
+    return jsonify({'filename': output_filename})
 
 @app.route('/api/decode', methods=['POST'])
 def decode():
